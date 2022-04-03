@@ -35,8 +35,7 @@ int main()
 			break;
 		default:
 			cout << "输入有误，请重新输入！" << endl;
-			system("pause");
-			system("cls");
+			Main.Clear();
 			break;
 		}
 	}

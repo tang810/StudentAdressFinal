@@ -17,9 +17,13 @@
 using namespace std;
 
 #define FILENAME "NameList.csv" //保存通讯录名单在名为 NameList 的文件中
-#define Width 100
-#define Length 50
-#define BeginRow 0
+#define Width 100     //屏幕宽度
+#define Length 50     //屏幕的长度
+#define BeginRow 0    //开始输出的行
+#define DistanceRow 2 //输出的行距
+#define Widthdivisor  3//除数
+#define Add 5         //Width的一半加上Add==开始输出的列
+
 
 class Address
 {

@@ -1,5 +1,5 @@
 #include"Address.h"
-#define Add 5
+
 void Address::Go(short x, short y)//控制光标位置
 {
 	this->HOut = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -8,7 +8,7 @@ void Address::Go(short x, short y)//控制光标位置
 }
 void Address::ShowMenu() //显示菜单
 {
-	Go(Width / 3+Add-5, ROW );
+	Go(Width / Widthdivisor+Add-5, ROW );
 	cout << "----------学生通讯录---------" << endl;
 	this->Endl();
 	cout << "0、退出通讯录系统" << endl;
@@ -25,7 +25,7 @@ void Address::ShowMenu() //显示菜单
 	this->Endl();
 	cout << "请按下数字键进行操作" << endl;
 	this->Endl();
-	int col1 = Width / 3 + Add - 5, col2 = Width / 3 + Add + 23;
+	int col1 = Width / Widthdivisor + Add - 5, col2 = Width /  Widthdivisor + Add + 23;
 	for (int row = 1; row < ROW; row++)
 	{
 		Go(col1, row);
@@ -382,7 +382,7 @@ Address::~Address() 						 //析构函数
 void Address::Clear()//清屏
 {
 	char ch = getch();
-	for(int i=ClearRow;i<Length;i++)
+	for(int i=ClearRow;i<=this->ROW;i++)
 		for (int j = 0; j < Width; j++)
 		{
 			Go(j, i);
@@ -392,5 +392,5 @@ void Address::Clear()//清屏
 }
 void Address::Endl()//换行
 {
-	Go(Width / 3 + Add, this->ROW += 2);
+	Go(Width / Widthdivisor + Add, this->ROW += DistanceRow);
 }
