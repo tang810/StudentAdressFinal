@@ -18,7 +18,6 @@ using namespace std;
 
 #define FILENAME "NameList.csv" //保存通讯录名单在名为 NameList 的文件中
 #define Width 100     //屏幕宽度
-#define Length 50     //屏幕的长度
 #define BeginRow 0    //开始输出的行
 #define DistanceRow 2 //输出的行距
 #define Widthdivisor  3//除数
@@ -61,6 +60,7 @@ public:
 	COORD  Pos;                      //光标坐标
 	int    ROW;
 	int    ClearRow;                 //开始清屏的行数
+	bool   IsEmpty;
 private:
 	map<string, Student> MyListID; //按学号排序存储联系人
 

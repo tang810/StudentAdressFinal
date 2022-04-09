@@ -48,6 +48,7 @@ Address::Address()					 //构造函数
 }
 void Address::ExitSystem()			 //退出系统
 {
+	this->Endl();
 	cout << "欢迎下次使用！" << endl;
 	exit(0);
 }
@@ -82,9 +83,6 @@ void Address::AddMember() 				 //添加联系人
 	this->MyListName.insert(make_pair(Name,NewMember));
 	this->MyListID[ID] = NewMember;
 	this->AppSave(NewMember);
-	this->Endl();
-	cout << "新建联系人成功！" << endl;
-	this->Clear();
 	
 }
 void Address::AppSave(Student NewMember)  //保存新增联系人
@@ -119,7 +117,10 @@ void Address::LoadMember() 				 //读入所有联系人
 	//文件不存在情况
 	if (!ifs.is_open())
 	{
-	
+		/*this->IsEmpty = true;*/
+		ofstream ofs;
+		ofs.open(FILENAME, ios::app);
+		ofs << "学号,姓名,电话,性别,学院" << endl;
 		ifs.close();
 		return;
 	}
@@ -128,12 +129,14 @@ void Address::LoadMember() 				 //读入所有联系人
 	ifs >> Check;
 	if (ifs.eof())
 	{
-		
+		this->IsEmpty = true;
 		return;
 	}
 	//文件不为空
 	ifs.putback(Check);
 	string Information;
+	string Tmp;
+	getline(ifs, Tmp);
 	while (getline(ifs, Information)) //姓名可带空格的输入
 	{
 		
@@ -284,7 +287,7 @@ void Address::DeleteMember() 			 //删除联系人
 	{
 		this->Endl();
 		cout << "查询结果如下：" << endl;
-		this->Endl();
+		Go(Width / 6 + Add, ROW += 2);
 		cout << It->second;
 		this->Endl();
 		cout << "是否对其进行删除？" << endl;
@@ -293,13 +296,14 @@ void Address::DeleteMember() 			 //删除联系人
 		this->Endl();
 		cout << "2、取消" << endl;
 		int Choice = 0;
+		cin >> Choice;
 		if (Choice == 1)
 		{
-			int Cnt = this->MyListName.count(It->second.GetStudentName());
+			int Cnt = this->MyListName.count(It->second.GetStudentName());//统计与该学号同姓名的学生，方便在MyListName容器中找到要删除的学号
 			auto Iterator = this->MyListName.find(It->second.GetStudentName());
 			for (int i = 0; i < Cnt; i++)
 			{
-				if (Iterator->second.GetStudentID() != TmpID)
+				if (Iterator->second.GetStudentID() != TmpID)//查找该ID对应的学生
 					Iterator++;
 			}
 			this->MyListName.erase(Iterator);
@@ -310,7 +314,11 @@ void Address::DeleteMember() 			 //删除联系人
 			this->Clear();
 		}
 		else
+		{
+			this->Clear();
 			return;
+		}
+			
 	}
 }
 void Address::Modify() 					 //修改联系人信息
@@ -337,7 +345,7 @@ void Address::Modify() 					 //修改联系人信息
 		this->Clear();
 		return;
 	}
-	int Cnt = this->MyListName.count(It->second.GetStudentName());
+	int Cnt = this->MyListName.count(It->second.GetStudentName());//统计与该学号同姓名的学生，方便在MyListName容器中找到要修改的学号
 	auto Iterator = this->MyListName.find(It->second.GetStudentName());
 	for (int i = 0; i < Cnt; i++)
 	{
